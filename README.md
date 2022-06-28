@@ -1,2 +1,3 @@
-# template-django
-A template for my Django project
+# Authentication System
+
+A authentication system using JWT
