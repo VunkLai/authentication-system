@@ -2,9 +2,12 @@ from functools import wraps
 from http import HTTPStatus
 
 from django.conf import settings
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpRequest, HttpResponse, JsonResponse
+
+from authentication import jwt
 
 
 def request_validator(func_view):
@@ -40,8 +43,21 @@ def register(request: HttpRequest) -> HttpResponse:
         )
 
 
+@request_validator
 def login(request: HttpRequest) -> HttpResponse:
-    return HttpResponse()
+    username = request.json['username']
+    password = request.json['password']
+    user = authenticate(username=username, password=password)
+    if user:
+        return JsonResponse({
+            'username': user.username,
+            'email': user.email,
+            'access-token': jwt.sign(user),
+        })
+    return HttpResponse(
+        'Incorrect username or password.',
+        status=HTTPStatus.UNAUTHORIZED
+    )
 
 
 def forgot_password(request: HttpRequest) -> HttpResponse:
