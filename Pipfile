@@ -16,6 +16,8 @@ pylint-django = "*"
 bandit = "*"
 safety = "*"
 ipython = "*"
+pytest = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.8"
