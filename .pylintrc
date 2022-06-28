@@ -155,6 +155,7 @@ disable=raw-checker-failed,
         missing-function-docstring,
         missing-class-docstring,
         no-member, # false positive rate is too high on third party packages
+        too-few-public-methods,
 
 
 # Enable the message, report, category or checker with the given id(s). You can
