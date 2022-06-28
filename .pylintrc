@@ -42,7 +42,7 @@ fail-under=10.0
 #from-stdin=
 
 # Files or directories to be skipped. They should be base names, not paths.
-ignore=CVS
+ignore=CVS,db.sqlite3
 
 # Add files or directories matching the regex patterns to the ignore-list. The
 # regex matches against paths and can be in Posix or Windows format.
@@ -156,6 +156,7 @@ disable=raw-checker-failed,
         missing-class-docstring,
         no-member, # false positive rate is too high on third party packages
         too-few-public-methods,
+        imported-auth-user,
 
 
 # Enable the message, report, category or checker with the given id(s). You can

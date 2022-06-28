@@ -18,7 +18,7 @@ def test_all_routes(client):
 
 def test_json_request_middleware(client):
     routes = [
-        '/auth/register',
+        # '/auth/register',
         '/auth/login',
         '/auth/forgot-password',
         '/auth/reset-password/hash-link',
@@ -27,3 +27,7 @@ def test_json_request_middleware(client):
     for route in routes:
         response = client.post(route, content_type='application/json')
         assert response.status_code == HTTPStatus.OK
+
+
+def test_settings_has_domain(settings):
+    assert settings.DOMAIN
