@@ -1,4 +1,18 @@
-all:
+# simulate ci/cd
+
+pipeline: analysis test
+
+# stages
+
+analysis: linting static-analysis security-analysis
+
+test: unittest
+
+build:
+
+# jobs
+
+requirements:
 	pipenv lock -r > requirements.txt
 
 linting:
@@ -13,5 +27,6 @@ security-analysis:
 	# stage: analysis
 	safety check --full-report
 
-check: linting static-analysis security-analysis
-	# stage: linting static-analysis security-analysis
+unittest:
+	# stage: test
+	pytest server
