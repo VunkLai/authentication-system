@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.template.loader import get_template
 
 from authentication import jwt
+from authentication.models import ForgotPassword
 
 
 def request_validator(func_view):
@@ -60,8 +62,26 @@ def login(request: HttpRequest) -> HttpResponse:
     )
 
 
+@request_validator
 def forgot_password(request: HttpRequest) -> HttpResponse:
-    return HttpResponse()
+    username = request.json['username']
+    try:
+        user = User.objects.get(username=username)
+        record = ForgotPassword.objects.create(user)
+        # send an email to the user
+        if settings.STAGE == 'production':
+            template = get_template('forgot_password_email.html')
+            context = {
+                'url': f'http://{settings.URL}/{record.hash_link}'
+            }
+            content = template.render(context)
+            user.email_user(subject='Password reset request', html_message=content)
+        return JsonResponse({'message': 'ok'})
+    except User.DoesNotExist:
+        return HttpResponse(
+            'The username does not exist.',
+            status=HTTPStatus.BAD_REQUEST
+        )
 
 
 def reset_password(request: HttpRequest, hash_link: str) -> HttpResponse:

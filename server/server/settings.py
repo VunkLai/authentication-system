@@ -33,7 +33,13 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
+STAGE = env('STAGE')
+
 DOMAIN = env.str('DOMAIN')
+
+URL = env.str('URL')
+
+ITERATIONS = env.int('ITERATIONS')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
@@ -50,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'authentication',
 ]
 
 MIDDLEWARE = [
