@@ -6,6 +6,7 @@ from hashlib import blake2b
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 def generate_hash_link(username: str) -> str:
@@ -32,3 +33,12 @@ class ForgotPassword(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = ForgotPasswordManager()
+
+    def is_expired(self):
+        now = timezone.localtime()
+        return bool(now - self.created_at < timezone.timedelta(hours=24))
+
+    def reset_password(self, password: str) -> None:
+        self.user.set_password(password)
+        self.done = True
+        self.save()
