@@ -34,11 +34,14 @@ class ForgotPassword(models.Model):
 
     objects = ForgotPasswordManager()
 
+    @property
     def is_expired(self):
         now = timezone.localtime()
-        return bool(now - self.created_at < timezone.timedelta(hours=24))
+        return bool(now - self.created_at > timezone.timedelta(hours=24))
 
     def reset_password(self, password: str) -> None:
         self.user.set_password(password)
+        self.user.save()
+
         self.done = True
         self.save()

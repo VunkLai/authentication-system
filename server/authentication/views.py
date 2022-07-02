@@ -92,30 +92,19 @@ def reset_password(request: HttpRequest, hash_link: str) -> HttpResponse:
                 'This link expired',
                 status=HTTPStatus.NOT_FOUND
             )
+        password = request.json['password']
+        record.reset_password(password)
+        return JsonResponse({'message': 'ok'})
     except ForgotPassword.DoesNotExist:
         return HttpResponse(
             'Not Found',
             status=HTTPStatus.NOT_FOUND
         )
-
-    if request.method == 'GET':
-        return JsonResponse({'message': 'ok'})
-
-    if request.method == 'POST':
-        try:
-            password = request.json['password']
-            record.reset_password(password)
-            return JsonResponse({'message': 'ok'})
-        except KeyError:
-            return HttpResponse(
-                'Invalid Request.',
-                status=HTTPStatus.BAD_REQUEST
-            )
-
-    return HttpResponse(
-        'Method not allowed',
-        status=HTTPStatus.METHOD_NOT_ALLOWED
-    )
+    except KeyError:
+        return HttpResponse(
+            'Invalid Request.',
+            status=HTTPStatus.BAD_REQUEST
+        )
 
 
 @request_validator
