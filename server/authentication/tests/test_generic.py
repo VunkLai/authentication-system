@@ -1,5 +1,7 @@
 from http import HTTPStatus
 
+import pytest
+
 
 def test_all_routes(client):
     routes = [
@@ -14,6 +16,7 @@ def test_all_routes(client):
         assert response.status_code == HTTPStatus.NOT_ACCEPTABLE, response.content
 
 
+@pytest.mark.skip
 def test_json_request_middleware(client):
     routes = [
         '/auth/register',

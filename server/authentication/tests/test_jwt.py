@@ -1,12 +1,7 @@
-from django.conf import settings
 from django.contrib.auth.models import User
 
 import pytest
 from authentication.jwt import sign, verify
-
-
-def test_settings_has_jwt_secret_key():
-    assert settings.JWT_SECRET_KEY
 
 
 @pytest.mark.django_db
