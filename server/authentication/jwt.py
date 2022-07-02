@@ -6,7 +6,7 @@ from django.utils import timezone
 
 import jwt
 
-folder = Path('/etc/ssl/authentication.jwt')
+folder = Path('/etc/ssl/authentication.system')
 
 
 def sign(user: User) -> str:
