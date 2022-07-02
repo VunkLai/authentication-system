@@ -34,7 +34,7 @@ class AuthenticationMiddleware:
     def __init__(self, get_response: Callable) -> None:
         self.get_response = get_response
         self.paths = [
-            '/auth/change-password/',
+            '/auth/change-password',
         ]
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
