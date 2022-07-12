@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'authentication',
+    # services
+    'cost_center',
 ]
 
 MIDDLEWARE = [
