@@ -13,6 +13,9 @@ class JsonRequestMiddleware:
         self.get_response = get_response
 
     def __call__(self, request: HttpRequest) -> HttpResponse:
+        if request.path.startswith('/admin'):
+            return self.get_response(request)
+
         if not request.content_type == 'application/json':
             return HttpResponse(
                 'Invalid Content-type.',
