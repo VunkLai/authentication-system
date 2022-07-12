@@ -48,7 +48,7 @@ class AuthenticationMiddleware:
         try:
             _, token = request.headers['Authorization'].split(' ', 1)
             user = verify(token)
-            if user:
+            if user.is_active:
                 request.user = user
                 response = self.get_response(request)
                 return response
