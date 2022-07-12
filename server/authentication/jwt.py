@@ -15,6 +15,7 @@ def sign(user: User) -> str:
     now = timezone.localtime()
     payload = {
         'username': user.username,
+        'email': user.email,
         'permissions': list(user.get_all_permissions()),
         'exp': now + timezone.timedelta(hours=2),
     }
